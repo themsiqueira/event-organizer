@@ -77,7 +77,6 @@ class EventOrganizerBusiness {
         title: 'Lunch',
         schedule: '',
       });
-      track.push(trackFirstPeriod);
       lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
       const trackSecondPeriod = this.MakeTrackPeriod(lectures);
       trackSecondPeriod.push({
@@ -85,7 +84,8 @@ class EventOrganizerBusiness {
         title: 'Networking Event',
         schedule: '',
       });
-      track.push(trackSecondPeriod);
+
+      track = trackFirstPeriod.concat(trackSecondPeriod);
 
       track = this.SetLecturesHour(track);
 
@@ -99,9 +99,7 @@ class EventOrganizerBusiness {
   }
 
   SetLecturesHour(track) {
-    let date = format(parseISO('2019-10-18T9:00AM'), [
-      (format = 'YYYY-MM-DDTHH:mm.A'),
-    ]);
+    let date = format(parseISO('2019-10-18T9:00'), 'YYYY-MM-DDTHH:mm.A');
 
     const result = track.map(item => {
       item.schedule = date;
