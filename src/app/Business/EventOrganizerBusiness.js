@@ -2,9 +2,9 @@ import { parseISO, addMinutes, format } from 'date-fns';
 
 class EventOrganizerBusiness {
   FormatInformation(information) {
-    const newInformation = information.map(item => {
+    const newInformation = [];
+    information.forEach(item => {
       const data = item.split(' ');
-      const result = [];
 
       if (data[data.length - 1] === 'lightning') {
         const time = '5min';
@@ -13,7 +13,7 @@ class EventOrganizerBusiness {
 
         const schedule = '';
 
-        result.push({
+        newInformation.push({
           time,
           title,
           schedule,
@@ -25,13 +25,12 @@ class EventOrganizerBusiness {
 
         const schedule = '';
 
-        result.push({
+        newInformation.push({
           time,
           title,
           schedule,
         });
       }
-      return result;
     });
 
     return newInformation;
@@ -55,7 +54,7 @@ class EventOrganizerBusiness {
     let sum = 0;
     const result = lecturesInformation.filter(item => {
       sum = parseInt(item.time.replace('min', ''), 10) + sum;
-      if (sum <= 180) return item;
+      return sum <= 180 ? item : null;
     });
 
     return result;

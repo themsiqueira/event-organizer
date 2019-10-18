@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "test": "jest"
+    "test": "jest",
+    "debug": "node --inspect-brk -r sucrase/register src/server.js"
   },
   "dependencies": {
     "date-fns": "^2.5.1",
