@@ -25,12 +25,24 @@ class Helper {
       newMin = min + toAdd;
     }
 
-    if (time.indexOf('AM') === -1 && hour < 12) period = 'PM';
-    else period = 'AM';
+    period = this.SetPeriod(time, hour);
 
-    result = `${hour.toString()}:${newMin.toString()}${period}`;
+    result = `${hour.toString()}:${
+      newMin === 0 ? (newMin = '00') : newMin.toString()
+    }${period}`;
 
     return result;
+  }
+
+  SetPeriod(time, newTime) {
+    let period = '';
+
+    if (newTime === 12) {
+      period = time.indexOf('PM') === -1 ? 'PM' : 'AM';
+    } else {
+      period = time.indexOf('PM') !== -1 ? 'PM' : 'AM';
+    }
+    return period;
   }
 }
 
