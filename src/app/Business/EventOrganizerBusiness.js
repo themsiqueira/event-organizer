@@ -69,7 +69,7 @@ class EventOrganizerBusiness {
     let lectures = newInformation;
 
     let i = 1;
-    while (i !== totalTracks) {
+    while (i <= totalTracks) {
       let track = [];
       const trackFirstPeriod = this.MakeTrackPeriod(lectures);
       trackFirstPeriod.push({
@@ -89,6 +89,8 @@ class EventOrganizerBusiness {
 
       track = this.SetLecturesHour(track);
 
+      track = this.FormatReturn(track);
+
       result.push({
         title: `Track ${i.toString()}`,
         data: track,
@@ -96,6 +98,8 @@ class EventOrganizerBusiness {
 
       i += 1;
     }
+
+    return result;
   }
 
   SetLecturesHour(track) {
@@ -104,6 +108,14 @@ class EventOrganizerBusiness {
       item.schedule = schedule;
       schedule = Helper.AddMinutes(schedule, item.time);
       return item;
+    });
+
+    return result;
+  }
+
+  FormatReturn(track) {
+    const result = track.map(item => {
+      return `${item.schedule} ${item.title} ${item.time}`;
     });
 
     return result;
