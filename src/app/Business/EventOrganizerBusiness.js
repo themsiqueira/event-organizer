@@ -60,7 +60,7 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  async MakeTracks(information) {
+  MakeTracks(information) {
     const result = [];
     const newInformation = this.FormatInformation(information);
 

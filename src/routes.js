@@ -6,6 +6,6 @@ import EventOrganizeController from './app/controllers/EventOrganizerController'
 
 const routes = new Router();
 
-routes.post('/organize/event', EventOrganizeController.Organizer);
+routes.post('/api/organize/event', EventOrganizeController.Organizer);
 
 export default routes;
