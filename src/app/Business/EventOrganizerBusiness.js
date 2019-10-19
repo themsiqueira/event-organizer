@@ -1,4 +1,4 @@
-import { parseISO, addMinutes, format } from 'date-fns';
+import Helper from '../Classes/Helper';
 
 class EventOrganizerBusiness {
   FormatInformation(information) {
@@ -99,11 +99,10 @@ class EventOrganizerBusiness {
   }
 
   SetLecturesHour(track) {
-    let date = format(parseISO('2019-10-18T9:00'), 'YYYY-MM-DDTHH:mm.A');
-
+    let schedule = '09:00AM';
     const result = track.map(item => {
-      item.schedule = date;
-      date = addMinutes(date, parseInt(item.time.replace('min', ''), 10));
+      item.schedule = schedule;
+      schedule = Helper.AddMinutes(schedule, item.time);
       return item;
     });
 
