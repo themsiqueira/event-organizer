@@ -27,8 +27,8 @@ class Helper {
 
     period = this.SetPeriod(time, hour);
 
-    result = `${hour.toString()}:${
-      newMin === 0 ? (newMin = '00') : newMin.toString()
+    result = `${hour < 10 ? '0'+ hour.toString() : hour.toString()}:${
+      newMin < 10 ? '0'+ newMin.toString() : newMin.toString()
     }${period}`;
 
     return result;

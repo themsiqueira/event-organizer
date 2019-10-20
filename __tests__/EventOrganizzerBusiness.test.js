@@ -156,7 +156,7 @@ test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
-      schedule: '9:00AM',
+      schedule: '09:00AM',
     },
     {
       time: '60min',
@@ -176,22 +176,22 @@ test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
     {
       time: '60min',
       title: 'Common Ruby Errors',
-      schedule: '1:00PM',
+      schedule: '01:00PM',
     },
     {
       time: '60min',
       title: 'Rails for Python Developers',
-      schedule: '2:00PM',
+      schedule: '02:00PM',
     },
     {
       time: '60min',
       title: 'Communicating Over Distance',
-      schedule: '3:00PM',
+      schedule: '03:00PM',
     },
     {
       time: '60min',
       title: 'Networking Event',
-      schedule: '4:00PM',
+      schedule: '04:00PM',
     }
   ]);
 });
@@ -201,7 +201,7 @@ test('Format return to expected', () =>{
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
-      schedule: '9:00AM',
+      schedule: '09:00AM',
     },
     {
       time: '60min',
@@ -221,32 +221,32 @@ test('Format return to expected', () =>{
     {
       time: '60min',
       title: 'Common Ruby Errors',
-      schedule: '1:00PM',
+      schedule: '01:00PM',
     },
     {
       time: '60min',
       title: 'Rails for Python Developers',
-      schedule: '2:00PM',
+      schedule: '02:00PM',
     },
     {
       time: '60min',
       title: 'Communicating Over Distance',
-      schedule: '3:00PM',
+      schedule: '03:00PM',
     },
     {
       time: '60min',
       title: 'Networking Event',
-      schedule: '4:00PM',
+      schedule: '04:00PM',
     }
   ])).toEqual([
-    "9:00AM Writing Fast Tests Against Enterprise Rails 60min",
+    "09:00AM Writing Fast Tests Against Enterprise Rails 60min",
     "10:00AM Overdoing it in Python 60min",
     "11:00AM Lua for the Masses 60min",
     "12:00PM Lunch 60min",
-    "1:00PM Common Ruby Errors 60min",
-    "2:00PM Rails for Python Developers 60min",
-    "3:00PM Communicating Over Distance 60min",
-    "4:00PM Networking Event 60min"
+    "01:00PM Common Ruby Errors 60min",
+    "02:00PM Rails for Python Developers 60min",
+    "03:00PM Communicating Over Distance 60min",
+    "04:00PM Networking Event 60min"
   ]);
 });
 
@@ -262,14 +262,14 @@ test('Make and format tracks from a given data', () => {
     {
       "title": "Track 1",
       "data": [
-        "9:00AM Writing Fast Tests Against Enterprise Rails 60min",
+        "09:00AM Writing Fast Tests Against Enterprise Rails 60min",
         "10:00AM Overdoing it in Python 60min",
         "11:00AM Lua for the Masses 60min",
         "12:00PM Lunch 60min",
-        "1:00PM Common Ruby Errors 60min",
-        "2:00PM Rails for Python Developers 60min",
-        "3:00PM Communicating Over Distance 60min",
-        "4:00PM Networking Event 60min"
+        "01:00PM Common Ruby Errors 60min",
+        "02:00PM Rails for Python Developers 60min",
+        "03:00PM Communicating Over Distance 60min",
+        "04:00PM Networking Event 60min"
       ]
     }
   ]);
