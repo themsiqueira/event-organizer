@@ -10,7 +10,7 @@
     "node": "12.9.1"
   },
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon src/server.js",
     "build": "sucrase ./src -d ./dist --transforms imports",
     "test": "jest",
