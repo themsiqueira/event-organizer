@@ -9,7 +9,7 @@ class EventOrganizerBusiness {
       if (data[data.length - 1] === 'lightning') {
         const time = '5min';
 
-        const title = item.replace('lightning', '');
+        const title = item.replace(' lightning', '');
 
         const schedule = '';
 
@@ -21,7 +21,7 @@ class EventOrganizerBusiness {
       } else {
         const time = data[data.length - 1];
 
-        const title = item.replace(time, '');
+        const title = item.replace(` ${time}`, '');
 
         const schedule = '';
 
