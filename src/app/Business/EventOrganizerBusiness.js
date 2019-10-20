@@ -132,7 +132,7 @@ class EventOrganizerBusiness {
   }
 
   SetStartTimeToAllEventsInTrack(track) {
-    let schedule = '9:00AM';
+    let schedule = '09:00AM';
     const result = track.map(item => {
       schedule = item.title !== 'Lunch' ? schedule : '12:00PM';
       item.schedule = schedule;
