@@ -47,23 +47,28 @@ class EventOrganizerBusiness {
 
     const result = sum / 360;
 
-    return result;
+    return Math.trunc(result);
   }
 
-  MakeTrackPeriod(lecturesInformation) {
+  MakeTrackPeriod(lecturesInformation, maxMinOfPeriod) {
     let sum = 0;
-    const result = lecturesInformation.filter(item => {
-      sum = parseInt(item.time.replace('min', ''), 10) + sum;
-      return sum <= 180 ? item : null;
-    });
+    const result = [];
+
+    for(let x = 0; x < lecturesInformation.length; x++){
+      let aux = parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
+      if(aux <= maxMinOfPeriod){
+        sum = aux;
+        result.push(lecturesInformation[x]);
+      }
+    }
 
     return result;
   }
 
   MakeTracks(information) {
-    const result = [];
+    let result = [];
     const newInformation = this.FormatInformation(information);
-
+    let tracks = [];
     const totalTracks = this.GetTotalTracks(newInformation);
 
     let lectures = newInformation;
@@ -71,14 +76,16 @@ class EventOrganizerBusiness {
     let i = 1;
     while (i <= totalTracks) {
       let track = [];
-      const trackFirstPeriod = this.MakeTrackPeriod(lectures);
+      let trackFirstPeriod = this.MakeTrackPeriod(lectures, 180);
+      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
+      let trackSecondPeriod = this.MakeTrackPeriod(lectures, 229);
+      lectures = lectures.filter(item => trackSecondPeriod.indexOf(item) === -1);
+
       trackFirstPeriod.push({
         time: '60min',
         title: 'Lunch',
         schedule: '',
       });
-      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
-      const trackSecondPeriod = this.MakeTrackPeriod(lectures);
       trackSecondPeriod.push({
         time: '60min',
         title: 'Networking Event',
@@ -89,14 +96,19 @@ class EventOrganizerBusiness {
 
       track = this.SetLecturesHour(track);
 
-      track = this.FormatReturn(track);
-
-      result.push({
-        title: `Track ${i.toString()}`,
-        data: track,
-      });
+      tracks.push(track);
 
       i += 1;
+    }
+
+    tracks = this.CheckAndAjustHappyHour(tracks);
+
+    for(let x = 0; x < tracks.length; x++){
+      let data = this.FormatReturn(tracks[x]);
+      result.push({
+        title: `Track ${(x + 1).toString()}`,
+        data,
+      });
     }
 
     return result;
@@ -105,10 +117,34 @@ class EventOrganizerBusiness {
   SetLecturesHour(track) {
     let schedule = '09:00AM';
     const result = track.map(item => {
+      schedule = item.title !== 'Lunch' ? schedule : '12:00PM';
       item.schedule = schedule;
       schedule = Helper.AddMinutes(schedule, item.time);
       return item;
     });
+
+    return result;
+  }
+
+  CheckAndAjustHappyHour(tracks){
+    let lunchTime = [];
+    tracks.forEach(track =>{
+      track.forEach(lecture =>{
+        let min = lecture.title === 'Networking Event' ? parseInt(lecture.schedule.split(':')[1].replace('PM', ''),10) : 0;
+        if(min > 0) lunchTime.push(min);
+      })
+    })
+
+    let min = Math.max(...lunchTime).toString();
+    lunchTime = `16:${min}PM`;
+
+    const result = tracks.map(track =>{
+      return track.map(lecture =>{
+        if(lecture.title === 'Networking Event')
+          lecture.schedule = lunchTime
+        return lecture;
+      })
+    })
 
     return result;
   }
