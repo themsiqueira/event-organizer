@@ -120,8 +120,6 @@ class EventOrganizerBusiness {
       i += 1;
     }
 
-    // tracks = this.CheckAndAjustHappyHour(tracks);
-
     for(let x = 0; x < tracks.length; x++){
       let data = this.FormatReturn(tracks[x]);
       result.push({
@@ -144,31 +142,6 @@ class EventOrganizerBusiness {
 
     return result;
   }
-
-  // CheckAndAjustHappyHour(tracks){
-  //   let lunchTime = [];
-  //   let hour = 0;
-  //   tracks.forEach(track =>{
-  //     track.forEach(lecture =>{
-  //       let min = lecture.title === 'Networking Event' ? parseInt(lecture.schedule.split(':')[1].replace('PM', ''),10) : 0;
-  //       if(hour < )
-  //       if(min > 0) lunchTime.push(min);
-  //     })
-  //   })
-
-  //   let min = Math.max(...lunchTime).toString();
-  //   lunchTime = `16:${min}PM`;
-
-  //   const result = tracks.map(track =>{
-  //     return track.map(lecture =>{
-  //       if(lecture.title === 'Networking Event')
-  //         lecture.schedule = lunchTime
-  //       return lecture;
-  //     })
-  //   })
-
-  //   return result;
-  // }
 
   FormatReturn(track) {
     const result = track.map(item => {
