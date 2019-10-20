@@ -36,7 +36,7 @@ class EventOrganizerBusiness {
     return newInformation;
   }
 
-  GetTotalTracks(newInformation) {
+  GetTotalTracksAndDurationTime(newInformation) {
     const numbers = newInformation.map(item =>
       parseInt(item.time.replace('min', ''), 10)
     );
@@ -47,9 +47,25 @@ class EventOrganizerBusiness {
 
     if(sum < 360) return 0;
 
-    const result = sum / 360;
+    let checkTracks;
+    let totalMinOfTrack = 360;
+    let result = 0;
+    while(checkTracks !== 0 && totalMinOfTrack <= 420)
+    {
+      checkTracks = sum % totalMinOfTrack;
+      if(checkTracks === 0){
+        result = sum / totalMinOfTrack;
+        break;
+      }
+      totalMinOfTrack += 5;
+    }
 
-    return Math.trunc(result);
+    if(result === 0) {
+      result = 1;
+      totalMinOfTrack = sum > 420 ? 420 : sum;
+    }
+
+    return { numTracks: Math.trunc(result), minOfEachTrack: totalMinOfTrack};
   }
 
   MakeTrackPeriod(lecturesInformation, maxMinOfPeriod) {
@@ -71,16 +87,17 @@ class EventOrganizerBusiness {
     let result = [];
     const newInformation = this.FormatInformation(information);
     let tracks = [];
-    const totalTracks = this.GetTotalTracks(newInformation);
+    const totalTracks = this.GetTotalTracksAndDurationTime(newInformation);
     if(totalTracks === 0) return 0;
     let lectures = newInformation;
 
     let i = 1;
-    while (i <= totalTracks) {
+    while (i <= totalTracks.numTracks) {
       let track = [];
       let trackFirstPeriod = this.MakeTrackPeriod(lectures, 180);
       lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
-      let trackSecondPeriod = this.MakeTrackPeriod(lectures, 229);
+
+      let trackSecondPeriod = this.MakeTrackPeriod(lectures, (totalTracks.minOfEachTrack - 180));
       lectures = lectures.filter(item => trackSecondPeriod.indexOf(item) === -1);
 
       trackFirstPeriod.push({
@@ -103,7 +120,7 @@ class EventOrganizerBusiness {
       i += 1;
     }
 
-    tracks = this.CheckAndAjustHappyHour(tracks);
+    // tracks = this.CheckAndAjustHappyHour(tracks);
 
     for(let x = 0; x < tracks.length; x++){
       let data = this.FormatReturn(tracks[x]);
@@ -128,28 +145,30 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  CheckAndAjustHappyHour(tracks){
-    let lunchTime = [];
-    tracks.forEach(track =>{
-      track.forEach(lecture =>{
-        let min = lecture.title === 'Networking Event' ? parseInt(lecture.schedule.split(':')[1].replace('PM', ''),10) : 0;
-        if(min > 0) lunchTime.push(min);
-      })
-    })
+  // CheckAndAjustHappyHour(tracks){
+  //   let lunchTime = [];
+  //   let hour = 0;
+  //   tracks.forEach(track =>{
+  //     track.forEach(lecture =>{
+  //       let min = lecture.title === 'Networking Event' ? parseInt(lecture.schedule.split(':')[1].replace('PM', ''),10) : 0;
+  //       if(hour < )
+  //       if(min > 0) lunchTime.push(min);
+  //     })
+  //   })
 
-    let min = Math.max(...lunchTime).toString();
-    lunchTime = `16:${min}PM`;
+  //   let min = Math.max(...lunchTime).toString();
+  //   lunchTime = `16:${min}PM`;
 
-    const result = tracks.map(track =>{
-      return track.map(lecture =>{
-        if(lecture.title === 'Networking Event')
-          lecture.schedule = lunchTime
-        return lecture;
-      })
-    })
+  //   const result = tracks.map(track =>{
+  //     return track.map(lecture =>{
+  //       if(lecture.title === 'Networking Event')
+  //         lecture.schedule = lunchTime
+  //       return lecture;
+  //     })
+  //   })
 
-    return result;
-  }
+  //   return result;
+  // }
 
   FormatReturn(track) {
     const result = track.map(item => {
