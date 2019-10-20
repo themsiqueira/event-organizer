@@ -45,6 +45,8 @@ class EventOrganizerBusiness {
 
     const sum = numbers.reduce(add);
 
+    if(sum < 360) return 0;
+
     const result = sum / 360;
 
     return Math.trunc(result);
@@ -70,7 +72,7 @@ class EventOrganizerBusiness {
     const newInformation = this.FormatInformation(information);
     let tracks = [];
     const totalTracks = this.GetTotalTracks(newInformation);
-
+    if(totalTracks === 0) return 0;
     let lectures = newInformation;
 
     let i = 1;
