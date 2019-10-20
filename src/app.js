@@ -1,10 +1,10 @@
-require('dotenv/config');
+import 'dotenv/config';
 
-const Youch = require('youch');
-const express = require('express');
-require('express-async-errors');
+import Youch from 'youch';
+import express from 'express';
+import 'express-async-errors';
 
-const routes = require('./routes');
+import routes from './routes';
 
 class App {
   constructor() {
