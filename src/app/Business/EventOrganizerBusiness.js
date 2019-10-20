@@ -1,6 +1,54 @@
 import Helper from '../Classes/Helper';
 
 class EventOrganizerBusiness {
+  MakeTracks(information) {
+    let result = [];
+    const newInformation = this.FormatInformation(information);
+    let tracks = [];
+    const totalTracks = this.GetTotalTracksAndDurationTime(newInformation);
+    if(totalTracks === 0) return 0;
+    let lectures = newInformation;
+
+    let i = 1;
+    while (i <= totalTracks.numTracks) {
+      let track = [];
+      let trackFirstPeriod = this.MakeTrackPeriod(lectures, 180);
+      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
+
+      let trackSecondPeriod = this.MakeTrackPeriod(lectures, (totalTracks.minOfEachTrack - 180));
+      lectures = lectures.filter(item => trackSecondPeriod.indexOf(item) === -1);
+
+      trackFirstPeriod.push({
+        time: '60min',
+        title: 'Lunch',
+        schedule: '',
+      });
+      trackSecondPeriod.push({
+        time: '60min',
+        title: 'Networking Event',
+        schedule: '',
+      });
+
+      track = trackFirstPeriod.concat(trackSecondPeriod);
+
+      track = this.SetStartTimeToAllEventsInTrack(track);
+
+      tracks.push(track);
+
+      i += 1;
+    }
+
+    for(let x = 0; x < tracks.length; x++){
+      let data = this.FormatReturn(tracks[x]);
+      result.push({
+        title: `Track ${(x + 1).toString()}`,
+        data,
+      });
+    }
+
+    return result;
+  }
+
   FormatInformation(information) {
     const newInformation = [];
     information.forEach(item => {
@@ -83,56 +131,8 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  MakeTracks(information) {
-    let result = [];
-    const newInformation = this.FormatInformation(information);
-    let tracks = [];
-    const totalTracks = this.GetTotalTracksAndDurationTime(newInformation);
-    if(totalTracks === 0) return 0;
-    let lectures = newInformation;
-
-    let i = 1;
-    while (i <= totalTracks.numTracks) {
-      let track = [];
-      let trackFirstPeriod = this.MakeTrackPeriod(lectures, 180);
-      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
-
-      let trackSecondPeriod = this.MakeTrackPeriod(lectures, (totalTracks.minOfEachTrack - 180));
-      lectures = lectures.filter(item => trackSecondPeriod.indexOf(item) === -1);
-
-      trackFirstPeriod.push({
-        time: '60min',
-        title: 'Lunch',
-        schedule: '',
-      });
-      trackSecondPeriod.push({
-        time: '60min',
-        title: 'Networking Event',
-        schedule: '',
-      });
-
-      track = trackFirstPeriod.concat(trackSecondPeriod);
-
-      track = this.SetLecturesHour(track);
-
-      tracks.push(track);
-
-      i += 1;
-    }
-
-    for(let x = 0; x < tracks.length; x++){
-      let data = this.FormatReturn(tracks[x]);
-      result.push({
-        title: `Track ${(x + 1).toString()}`,
-        data,
-      });
-    }
-
-    return result;
-  }
-
-  SetLecturesHour(track) {
-    let schedule = '09:00AM';
+  SetStartTimeToAllEventsInTrack(track) {
+    let schedule = '9:00AM';
     const result = track.map(item => {
       schedule = item.title !== 'Lunch' ? schedule : '12:00PM';
       item.schedule = schedule;
