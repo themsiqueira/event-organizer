@@ -16,6 +16,7 @@ class EventOrganizerBusiness {
       lectures = lectures.filter(
         item => trackSecondPeriod.indexOf(item) === -1
       );
+
       trackFirstPeriod.push(this.getInterval('first'));
       trackSecondPeriod.push(this.getInterval('second'));
       track = trackFirstPeriod.concat(trackSecondPeriod);
@@ -23,8 +24,7 @@ class EventOrganizerBusiness {
       tracks.push(track);
     }
 
-    const result = this.formatReturn(tracks);
-
+    const result = this.verifyAndIfNeedMakeTracksAgain(tracks, newInformation);
     return result;
   }
 
@@ -100,7 +100,6 @@ class EventOrganizerBusiness {
         result.push(lecturesInformation[x]);
       }
     }
-
     return result;
   }
 
@@ -132,6 +131,36 @@ class EventOrganizerBusiness {
     });
 
     return result;
+  }
+
+  verifyAndIfNeedMakeTracksAgain(tracks, newInformation) {
+    let result;
+    if (tracks.length < 1) {
+      if (!this.checkTracks(tracks)) {
+        const newTotalTracks = { numTracks: 1, minOfEachTrack: 420 };
+        result = this.makeTracks(newInformation, newTotalTracks);
+      }
+    } else {
+      result = this.formatReturn(tracks);
+    }
+    return result;
+  }
+
+  checkTracks(tracks) {
+    const arraySum = [];
+    let sum = 0;
+    tracks.forEach(track => {
+      track.forEach(lectures => {
+        sum = parseInt(lectures.time.replace('min', ''), 10) + sum;
+      });
+      arraySum.push(sum);
+      sum = 0;
+    });
+
+    const allEqual = arr => arr.every(v => v === arr[0]);
+    allEqual(arraySum);
+
+    return allEqual;
   }
 
   formatReturn(tracks) {
