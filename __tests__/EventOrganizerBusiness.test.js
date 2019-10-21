@@ -1,9 +1,12 @@
 import EventOrganizerBusiness from '../src/app/Business/EventOrganizerBusiness';
 
-test('verify if format data to a correct structure', () =>{
-  expect(EventOrganizerBusiness.formatInformation([
-  "Writing Fast Tests Against Enterprise Rails 60min",
-  "Overdoing it in Python 45min"])).toEqual([
+test('verify if format data to a correct structure', () => {
+  expect(
+    EventOrganizerBusiness.formatInformation([
+      'Writing Fast Tests Against Enterprise Rails 60min',
+      'Overdoing it in Python 45min',
+    ])
+  ).toEqual([
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
@@ -13,51 +16,13 @@ test('verify if format data to a correct structure', () =>{
       time: '45min',
       title: 'Overdoing it in Python',
       schedule: '',
-    }
+    },
   ]);
 });
 
-test('verify total tracks by passed a data', () =>{
-  expect(EventOrganizerBusiness.getTotalTracksAndDurationTime([
-    {
-      time: '60min',
-      title: 'Writing Fast Tests Against Enterprise Rails',
-      schedule: '',
-    },
-    {
-      time: '60min',
-      title: 'Overdoing it in Python',
-      schedule: '',
-    },
-    {
-      time: '60min',
-      title: 'Lua for the Masses',
-      schedule: '',
-    },
-    {
-      time: '60min',
-      title: 'Common Ruby Errors',
-      schedule: '',
-    },
-    {
-      time: '60min',
-      title: 'Rails for Python Developers',
-      schedule: '',
-    },
-    {
-      time: '60min',
-      title: 'Communicating Over Distance',
-      schedule: '',
-    },
-  ])).toEqual({
-    numTracks: 1,
-    minOfEachTrack: 360,
-  });
-});
-
-test('check lectures and return schedule for time that was send', () =>{
-  expect(EventOrganizerBusiness.makeTrackPeriod(
-    [
+test('verify total tracks by passed a data', () => {
+  expect(
+    EventOrganizerBusiness.getTotalTracksAndDurationTime([
       {
         time: '60min',
         title: 'Writing Fast Tests Against Enterprise Rails',
@@ -88,29 +53,72 @@ test('check lectures and return schedule for time that was send', () =>{
         title: 'Communicating Over Distance',
         schedule: '',
       },
-    ], 180
-    )).toEqual([
-      {
-        time: '60min',
-        title: 'Writing Fast Tests Against Enterprise Rails',
-        schedule: '',
-      },
-      {
-        time: '60min',
-        title: 'Overdoing it in Python',
-        schedule: '',
-      },
-      {
-        time: '60min',
-        title: 'Lua for the Masses',
-        schedule: '',
-      },
+    ])
+  ).toEqual({
+    numTracks: 1,
+    minOfEachTrack: 360,
+  });
+});
+
+test('check lectures and return schedule for time that was send', () => {
+  expect(
+    EventOrganizerBusiness.makeTrackPeriod(
+      [
+        {
+          time: '60min',
+          title: 'Writing Fast Tests Against Enterprise Rails',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Overdoing it in Python',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Lua for the Masses',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Common Ruby Errors',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Rails for Python Developers',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over Distance',
+          schedule: '',
+        },
+      ],
+      180
+    )
+  ).toEqual([
+    {
+      time: '60min',
+      title: 'Writing Fast Tests Against Enterprise Rails',
+      schedule: '',
+    },
+    {
+      time: '60min',
+      title: 'Overdoing it in Python',
+      schedule: '',
+    },
+    {
+      time: '60min',
+      title: 'Lua for the Masses',
+      schedule: '',
+    },
   ]);
 });
 
-test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
-  expect(EventOrganizerBusiness.setStartTimeToAllEventsInTrack(
-    [
+test('Set appointment hour to all lectures, lunch and Networking Event', () => {
+  expect(
+    EventOrganizerBusiness.setStartTimeToAllEventsInTrack([
       {
         time: '60min',
         title: 'Writing Fast Tests Against Enterprise Rails',
@@ -150,9 +158,9 @@ test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
         time: '60min',
         title: 'Networking Event',
         schedule: '',
-      }
-    ]
-  )).toEqual([
+      },
+    ])
+  ).toEqual([
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
@@ -192,85 +200,126 @@ test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
       time: '60min',
       title: 'Networking Event',
       schedule: '04:00PM',
-    }
+    },
   ]);
 });
 
-test('Format return to expected', () =>{
-  expect(EventOrganizerBusiness.formatReturn([
+test('Format return to expected', () => {
+  expect(
+    EventOrganizerBusiness.formatReturn([
+      [
+        {
+          time: '60min',
+          title: 'Writing Fast Tests Against Enterprise Rails',
+          schedule: '09:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Overdoing it in Python',
+          schedule: '10:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lua for the Masses',
+          schedule: '11:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lunch',
+          schedule: '12:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Common Ruby Errors',
+          schedule: '01:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Rails for Python Developers',
+          schedule: '02:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over Distance',
+          schedule: '03:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Networking Event',
+          schedule: '04:00PM',
+        },
+      ],
+    ])
+  ).toEqual([
     {
-      time: '60min',
-      title: 'Writing Fast Tests Against Enterprise Rails',
-      schedule: '09:00AM',
+      title: 'Track 1',
+      data: [
+        '09:00AM Writing Fast Tests Against Enterprise Rails 60min',
+        '10:00AM Overdoing it in Python 60min',
+        '11:00AM Lua for the Masses 60min',
+        '12:00PM Lunch 60min',
+        '01:00PM Common Ruby Errors 60min',
+        '02:00PM Rails for Python Developers 60min',
+        '03:00PM Communicating Over Distance 60min',
+        '04:00PM Networking Event 60min',
+      ],
     },
-    {
-      time: '60min',
-      title: 'Overdoing it in Python',
-      schedule: '10:00AM',
-    },
-    {
-      time: '60min',
-      title: 'Lua for the Masses',
-      schedule: '11:00AM',
-    },
-    {
-      time: '60min',
-      title: 'Lunch',
-      schedule: '12:00PM',
-    },
-    {
-      time: '60min',
-      title: 'Common Ruby Errors',
-      schedule: '01:00PM',
-    },
-    {
-      time: '60min',
-      title: 'Rails for Python Developers',
-      schedule: '02:00PM',
-    },
-    {
-      time: '60min',
-      title: 'Communicating Over Distance',
-      schedule: '03:00PM',
-    },
-    {
-      time: '60min',
-      title: 'Networking Event',
-      schedule: '04:00PM',
-    }
-  ])).toEqual([
-    "09:00AM Writing Fast Tests Against Enterprise Rails 60min",
-    "10:00AM Overdoing it in Python 60min",
-    "11:00AM Lua for the Masses 60min",
-    "12:00PM Lunch 60min",
-    "01:00PM Common Ruby Errors 60min",
-    "02:00PM Rails for Python Developers 60min",
-    "03:00PM Communicating Over Distance 60min",
-    "04:00PM Networking Event 60min"
   ]);
 });
 
 test('Make and format tracks from a given data', () => {
-  expect(EventOrganizerBusiness.makeTracks([
-    'Writing Fast Tests Against Enterprise Rails 60min',
-    'Overdoing it in Python 60min',
-    'Lua for the Masses 60min',
-    'Common Ruby Errors 60min',
-    'Rails for Python Developers 60min',
-    'Communicating Over Distance 60min',
-  ])).toEqual([
+  expect(
+    EventOrganizerBusiness.makeTracks(
+      [
+        {
+          time: '60min',
+          title: 'Writing Fast Tests Against Enterprise Rails',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Overdoing it in Python',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Lua for the Masses',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Common Ruby Errors',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Rails for Python Developers',
+          schedule: '',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over Distance',
+          schedule: '',
+        },
+      ],
+      {
+        numTracks: 1,
+        minOfEachTrack: 360,
+      }
+    )
+  ).toEqual([
     {
-      "title": "Track 1",
-      "data": [
-        "09:00AM Writing Fast Tests Against Enterprise Rails 60min",
-        "10:00AM Overdoing it in Python 60min",
-        "11:00AM Lua for the Masses 60min",
-        "12:00PM Lunch 60min",
-        "01:00PM Common Ruby Errors 60min",
-        "02:00PM Rails for Python Developers 60min",
-        "03:00PM Communicating Over Distance 60min",
-        "04:00PM Networking Event 60min"
-      ]
-    }
+      title: 'Track 1',
+      data: [
+        '09:00AM Writing Fast Tests Against Enterprise Rails 60min',
+        '10:00AM Overdoing it in Python 60min',
+        '11:00AM Lua for the Masses 60min',
+        '12:00PM Lunch 60min',
+        '01:00PM Common Ruby Errors 60min',
+        '02:00PM Rails for Python Developers 60min',
+        '03:00PM Communicating Over Distance 60min',
+        '04:00PM Networking Event 60min',
+      ],
+    },
   ]);
 });

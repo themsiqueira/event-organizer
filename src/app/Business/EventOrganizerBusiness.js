@@ -138,7 +138,9 @@ class EventOrganizerBusiness {
     const result = [];
     for (let x = 0; x < tracks.length; x++) {
       const data = tracks[x].map(item => {
-        return `${item.schedule} ${item.title} ${item.time}`;
+        return `${item.schedule} ${item.title} ${
+          item.time === '5min' ? 'ligthning' : item.time
+        }`;
       });
       result.push({
         title: `Track ${(x + 1).toString()}`,
