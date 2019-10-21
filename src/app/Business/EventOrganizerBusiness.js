@@ -153,11 +153,9 @@ class EventOrganizerBusiness {
       arraySum.push(sum);
       sum = 0;
     });
-
     const allEqual = arr => arr.every(v => v === arr[0]);
-    allEqual(arraySum);
 
-    return allEqual;
+    return allEqual(arraySum);
   }
 
   formatReturn(tracks) {

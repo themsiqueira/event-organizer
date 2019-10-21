@@ -421,3 +421,99 @@ test('by pass a first period return Networking Event', () => {
     schedule: '',
   });
 });
+
+test('check if tracks has the same duration', () => {
+  expect(
+    EventOrganizerBusiness.checkTracks([
+      [
+        {
+          time: '60min',
+          title: 'Writing Fast Tests Against Enterprise Rails',
+          schedule: '09:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Overdoing it in Python',
+          schedule: '10:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lua for the Masses',
+          schedule: '11:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lunch',
+          schedule: '12:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Common Ruby Errors',
+          schedule: '01:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Rails for Python Developers',
+          schedule: '02:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over Distance',
+          schedule: '03:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Networking Event',
+          schedule: '04:00PM',
+        },
+      ],
+      [
+        {
+          time: '60min',
+          title: 'Writing Fast Tests Against Enterprise Rails',
+          schedule: '09:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Overdoing it in Python',
+          schedule: '10:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lua for the Masses',
+          schedule: '11:00AM',
+        },
+        {
+          time: '60min',
+          title: 'Lunch',
+          schedule: '12:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Common Ruby Errors',
+          schedule: '01:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Rails for Python Developers',
+          schedule: '02:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over Distance',
+          schedule: '03:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Communicating Over',
+          schedule: '04:00PM',
+        },
+        {
+          time: '60min',
+          title: 'Networking Event',
+          schedule: '05:00PM',
+        },
+      ],
+    ])
+  ).toEqual(false);
+});
