@@ -43,11 +43,8 @@ class EventOrganizerBusiness {
         });
       } else {
         const time = data[data.length - 1];
-
         const title = item.replace(` ${time}`, '');
-
         const schedule = '';
-
         newInformation.push({
           time,
           title,
