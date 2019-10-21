@@ -138,7 +138,7 @@ class EventOrganizerBusiness
     const result = track.map(item => {
       schedule = item.title !== 'Lunch' ? schedule : '12:00PM';
       item.schedule = schedule;
-      schedule = Helper.AddMinutes(schedule, item.time);
+      schedule = Helper.addMinutes(schedule, item.time);
       return item;
     });
 
