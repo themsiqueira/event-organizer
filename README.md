@@ -19,41 +19,34 @@ Para rodar o projeto em sua maquina é necessário as ferramentas abaixo:
 
 Antes de iniciar instale as dependências do projeto:
 
-bash
-yarn instal
+`bash yarn install`
 
 ou
 
-bash
-npm instal
+`bash npm install`
 
 ## Comandos disponíveis
 
 Abaixo temos alguns comandos úteis para debug, execução, build e executar testes.
 
 - Criar o build do projeto para deploy:
-  bash
-  yarn build
+  `bash yarn build`
 
 * Executar o projeto localmente:
-  bash
-  yarn dev
+  `bash yarn dev`
 
 - Executar os testes com o jest:
-  bash
-  yarn test
+  `bash yarn test`
 
 # Requisição dos dados
 
 A chamada é do tipo HTTP/POST e deve ser feita pela url abaixo:
 
 - Localhost:
-  bash
-  http://localhost:5000/api/organize/event
+  `bash http://localhost:5000/api/organize/event`
 
 * Produção:
-  bash
-  https://event-organizer-quero.herokuapp.com/api/organize/event
+  `bash https://event-organizer-quero.herokuapp.com/api/organize/event`
 
 > Obs: a porta pode ser configurada no arquivo server.js
 
@@ -62,53 +55,59 @@ Basicamente ela recebe um array de string, onde cada string deve conter como tit
 Exemplo:
 
 bash
+
+```
 {
-"data":[
-"Writing Fast Tests Against Enterprise Rails 60min",
-"Overdoing it in Python 45min",
-"Lua for the Masses 30min",
-"Ruby Errors from Mismatched Gem Versions 45min",
-"Common Ruby Errors 45min",
-"Rails for Python Developers lightning",
-"Communicating Over Distance 60min",
-"Accounting-Driven Development 45min",
-"Woah 30min",
-"Sit Down and Write 30min",
-"Pair Programming vs Noise 45min",
-"Rails Magic 60min",
-"Ruby on Rails: Why We Should Move On 60min",
-"Clojure Ate Scala (on my project) 45min",
-"Programming in the Boondocks of Seattle 30min",
-"Ruby vs. Clojure for Back-End Development 30min",
-"Ruby on Rails Legacy App Maintenance 60min",
-"A World Without HackerNews 30min",
-"User Interface CSS in Rails Apps 30min"
-]
+  "data":[
+    "Writing Fast Tests Against Enterprise Rails 60min",
+    "Overdoing it in Python 45min",
+    "Lua for the Masses 30min",
+    "Ruby Errors from Mismatched Gem Versions 45min",
+    "Common Ruby Errors 45min",
+    "Rails for Python Developers lightning",
+    "Communicating Over Distance 60min",
+    "Accounting-Driven Development 45min",
+    "Woah 30min",
+    "Sit Down and Write 30min",
+    "Pair Programming vs Noise 45min",
+    "Rails Magic 60min",
+    "Ruby on Rails: Why We Should Move On 60min",
+    "Clojure Ate Scala (on my project) 45min",
+    "Programming in the Boondocks of Seattle 30min",
+    "Ruby vs. Clojure for Back-End Development 30min",
+    "Ruby on Rails Legacy App Maintenance 60min",
+    "A World Without HackerNews 30min",
+    "User Interface CSS in Rails Apps 30min"
+  ]
 }
+```
 
 O retorno da chamada será conforme o exemplo abaixo:
 bash
+
+```
 {
 "data": [
-{
-"title": "Track 1",
-"data": [
-"09:00AM Writing Fast Tests Against Enterprise Rails 60min",
-"10:00AM Overdoing it in Python 45min",
-"10:45AM Lua for the Masses 30min",
-"11:15AM Ruby Errors from Mismatched Gem Versions 45min",
-"12:00PM Lunch 60min",
-"01:00PM Common Ruby Errors 45min",
-"01:45PM Rails for Python Developers 5min",
-"01:50PM Communicating Over Distance 60min",
-"02:50PM Accounting-Driven Development 45min",
-"03:35PM Woah 30min",
-"04:05PM Sit Down and Write 30min",
-"04:35PM Networking Event 60min"
+  {
+    "title": "Track 1",
+    "data": [
+      "09:00AM Writing Fast Tests Against Enterprise Rails 60min",
+      "10:00AM Overdoing it in Python 45min",
+      "10:45AM Lua for the Masses 30min",
+      "11:15AM Ruby Errors from Mismatched Gem Versions 45min",
+      "12:00PM Lunch 60min",
+      "01:00PM Common Ruby Errors 45min",
+      "01:45PM Rails for Python Developers 5min",
+      "01:50PM Communicating Over Distance 60min",
+      "02:50PM Accounting-Driven Development 45min",
+      "03:35PM Woah 30min",
+      "04:05PM Sit Down and Write 30min",
+      "04:35PM Networking Event 60min"
+    ]
+  }
 ]
 }
-]
-}
+```
 
 Informações extras
 
