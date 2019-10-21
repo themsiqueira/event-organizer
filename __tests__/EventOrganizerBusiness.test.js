@@ -20,7 +20,89 @@ test('verify if format data to a correct structure', () => {
   ]);
 });
 
-test('verify total tracks by passed a data', () => {
+test('verify if was send lectures suficient to make at least one track', () => {
+  expect(
+    EventOrganizerBusiness.getTotalTracksAndDurationTime([
+      {
+        time: '60min',
+        title: 'Writing Fast Tests Against Enterprise Rails',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Overdoing it in Python',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Lua for the Masses',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Common Ruby Errors',
+        schedule: '',
+      },
+    ])
+  ).toEqual(0);
+});
+
+test('If have received lectures to fill a half track, you should fill as much as you can with the full track.', () => {
+  expect(
+    EventOrganizerBusiness.getTotalTracksAndDurationTime([
+      {
+        time: '60min',
+        title: 'Writing Fast Tests Against Enterprise Rails',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Overdoing it in Python',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Lua for the Masses',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Common Ruby Errors',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Rails for Python Developers',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Rails',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Communicating Over Distance',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Distance',
+        schedule: '',
+      },
+      {
+        time: '60min',
+        title: 'Communicating Over',
+        schedule: '',
+      },
+    ])
+  ).toEqual({
+    numTracks: 1,
+    minOfEachTrack: 420,
+  });
+});
+
+test('verify total tracks should be done and time for track by passed a data', () => {
   expect(
     EventOrganizerBusiness.getTotalTracksAndDurationTime([
       {
@@ -322,4 +404,20 @@ test('Make and format tracks from a given data', () => {
       ],
     },
   ]);
+});
+
+test('by pass a first period return Lunch', () => {
+  expect(EventOrganizerBusiness.getInterval('first')).toEqual({
+    time: '60min',
+    title: 'Lunch',
+    schedule: '',
+  });
+});
+
+test('by pass a first period return Networking Event', () => {
+  expect(EventOrganizerBusiness.getInterval('second')).toEqual({
+    time: '60min',
+    title: 'Networking Event',
+    schedule: '',
+  });
 });
