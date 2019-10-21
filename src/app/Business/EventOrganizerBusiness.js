@@ -1,16 +1,11 @@
 import Helper from '../Classes/Helper';
 
 class EventOrganizerBusiness {
-  makeTracks(information) {
-    const result = [];
-    const newInformation = this.formatInformation(information);
+  makeTracks(newInformation, totalTracks) {
     const tracks = [];
-    const totalTracks = this.getTotalTracksAndDurationTime(newInformation);
-    if (totalTracks === 0) return 0;
     let lectures = newInformation;
 
-    let i = 1;
-    while (i <= totalTracks.numTracks) {
+    for (let i = 1; i <= totalTracks.numTracks; i++) {
       let track = [];
       const trackFirstPeriod = this.makeTrackPeriod(lectures, 180);
       lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
@@ -21,29 +16,14 @@ class EventOrganizerBusiness {
       lectures = lectures.filter(
         item => trackSecondPeriod.indexOf(item) === -1
       );
-      trackFirstPeriod.push({
-        time: '60min',
-        title: 'Lunch',
-        schedule: '',
-      });
-      trackSecondPeriod.push({
-        time: '60min',
-        title: 'Networking Event',
-        schedule: '',
-      });
+      trackFirstPeriod.push(this.getInterval('first'));
+      trackSecondPeriod.push(this.getInterval('second'));
       track = trackFirstPeriod.concat(trackSecondPeriod);
       track = this.setStartTimeToAllEventsInTrack(track);
       tracks.push(track);
-      i += 1;
     }
 
-    for (let x = 0; x < tracks.length; x++) {
-      const data = this.formatReturn(tracks[x]);
-      result.push({
-        title: `Track ${(x + 1).toString()}`,
-        data,
-      });
-    }
+    const result = this.formatReturn(tracks);
 
     return result;
   }
@@ -124,6 +104,24 @@ class EventOrganizerBusiness {
     return result;
   }
 
+  getInterval(period) {
+    let result;
+    if (period === 'first') {
+      result = {
+        time: '60min',
+        title: 'Lunch',
+        schedule: '',
+      };
+    } else if (period === 'second') {
+      result = {
+        time: '60min',
+        title: 'Networking Event',
+        schedule: '',
+      };
+    }
+    return result;
+  }
+
   setStartTimeToAllEventsInTrack(track) {
     let schedule = '09:00AM';
     const result = track.map(item => {
@@ -136,11 +134,17 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  formatReturn(track) {
-    const result = track.map(item => {
-      return `${item.schedule} ${item.title} ${item.time}`;
-    });
-
+  formatReturn(tracks) {
+    const result = [];
+    for (let x = 0; x < tracks.length; x++) {
+      const data = tracks[x].map(item => {
+        return `${item.schedule} ${item.title} ${item.time}`;
+      });
+      result.push({
+        title: `Track ${(x + 1).toString()}`,
+        data,
+      });
+    }
     return result;
   }
 }
