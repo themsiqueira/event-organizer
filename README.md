@@ -53,7 +53,7 @@ A chamada é do tipo HTTP/POST e deve ser feita pela url abaixo:
 
 * Produção:
   bash
-  http://localhost:5000/api/organize/event
+  https://event-organizer-quero.herokuapp.com/api/organize/event
 
 > Obs: a porta pode ser configurada no arquivo server.js
 
