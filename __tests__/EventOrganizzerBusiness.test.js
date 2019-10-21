@@ -1,7 +1,7 @@
 import EventOrganizerBusiness from '../src/app/Business/EventOrganizerBusiness';
 
 test('verify if format data to a correct structure', () =>{
-  expect(EventOrganizerBusiness.FormatInformation([
+  expect(EventOrganizerBusiness.formatInformation([
   "Writing Fast Tests Against Enterprise Rails 60min",
   "Overdoing it in Python 45min"])).toEqual([
     {
@@ -18,7 +18,7 @@ test('verify if format data to a correct structure', () =>{
 });
 
 test('verify total tracks by passed a data', () =>{
-  expect(EventOrganizerBusiness.GetTotalTracksAndDurationTime([
+  expect(EventOrganizerBusiness.getTotalTracksAndDurationTime([
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
@@ -56,7 +56,7 @@ test('verify total tracks by passed a data', () =>{
 });
 
 test('check lectures and return schedule for time that was send', () =>{
-  expect(EventOrganizerBusiness.MakeTrackPeriod(
+  expect(EventOrganizerBusiness.makeTrackPeriod(
     [
       {
         time: '60min',
@@ -109,7 +109,7 @@ test('check lectures and return schedule for time that was send', () =>{
 });
 
 test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
-  expect(EventOrganizerBusiness.SetStartTimeToAllEventsInTrack(
+  expect(EventOrganizerBusiness.setStartTimeToAllEventsInTrack(
     [
       {
         time: '60min',
@@ -197,7 +197,7 @@ test('Set appointment hour to all lectures, lunch and Networking Event', () =>{
 });
 
 test('Format return to expected', () =>{
-  expect(EventOrganizerBusiness.FormatReturn([
+  expect(EventOrganizerBusiness.formatReturn([
     {
       time: '60min',
       title: 'Writing Fast Tests Against Enterprise Rails',
@@ -251,7 +251,7 @@ test('Format return to expected', () =>{
 });
 
 test('Make and format tracks from a given data', () => {
-  expect(EventOrganizerBusiness.MakeTracks([
+  expect(EventOrganizerBusiness.makeTracks([
     'Writing Fast Tests Against Enterprise Rails 60min',
     'Overdoing it in Python 60min',
     'Lua for the Masses 60min',
