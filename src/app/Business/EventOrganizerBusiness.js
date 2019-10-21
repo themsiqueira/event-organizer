@@ -1,24 +1,26 @@
 import Helper from '../Classes/Helper';
 
-class EventOrganizerBusiness
-{
-  makeTracks(information)
-  {
-    let result = [];
+class EventOrganizerBusiness {
+  makeTracks(information) {
+    const result = [];
     const newInformation = this.formatInformation(information);
-    let tracks = [];
+    const tracks = [];
     const totalTracks = this.getTotalTracksAndDurationTime(newInformation);
-    if(totalTracks === 0) return 0;
+    if (totalTracks === 0) return 0;
     let lectures = newInformation;
 
     let i = 1;
-    while (i <= totalTracks.numTracks)
-    {
+    while (i <= totalTracks.numTracks) {
       let track = [];
-      let trackFirstPeriod = this.makeTrackPeriod(lectures, 180);
+      const trackFirstPeriod = this.makeTrackPeriod(lectures, 180);
       lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
-      let trackSecondPeriod = this.makeTrackPeriod(lectures, (totalTracks.minOfEachTrack - 180));
-      lectures = lectures.filter(item => trackSecondPeriod.indexOf(item) === -1);
+      const trackSecondPeriod = this.makeTrackPeriod(
+        lectures,
+        totalTracks.minOfEachTrack - 180
+      );
+      lectures = lectures.filter(
+        item => trackSecondPeriod.indexOf(item) === -1
+      );
       trackFirstPeriod.push({
         time: '60min',
         title: 'Lunch',
@@ -35,9 +37,8 @@ class EventOrganizerBusiness
       i += 1;
     }
 
-    for(let x = 0; x < tracks.length; x++)
-    {
-      let data = this.formatReturn(tracks[x]);
+    for (let x = 0; x < tracks.length; x++) {
+      const data = this.formatReturn(tracks[x]);
       result.push({
         title: `Track ${(x + 1).toString()}`,
         data,
@@ -47,13 +48,11 @@ class EventOrganizerBusiness
     return result;
   }
 
-  formatInformation(information)
-  {
+  formatInformation(information) {
     const newInformation = [];
     information.forEach(item => {
       const data = item.split(' ');
-      if (data[data.length - 1] === 'lightning')
-      {
+      if (data[data.length - 1] === 'lightning') {
         const time = '5min';
         const title = item.replace(' lightning', '');
         const schedule = '';
@@ -62,9 +61,7 @@ class EventOrganizerBusiness
           title,
           schedule,
         });
-      }
-      else
-      {
+      } else {
         const time = data[data.length - 1];
 
         const title = item.replace(` ${time}`, '');
@@ -82,49 +79,43 @@ class EventOrganizerBusiness
     return newInformation;
   }
 
-  getTotalTracksAndDurationTime(newInformation)
-  {
+  getTotalTracksAndDurationTime(newInformation) {
     const numbers = newInformation.map(item =>
       parseInt(item.time.replace('min', ''), 10)
     );
     const add = (a, b) => a + b;
     const sum = numbers.reduce(add);
-    if(sum < 360)
-    {
+    if (sum < 360) {
       return 0;
     }
     let checkTracks;
     let totalMinOfTrack = 360;
     let result = 0;
-    while(checkTracks !== 0 && totalMinOfTrack <= 420)
-    {
+    while (checkTracks !== 0 && totalMinOfTrack <= 420) {
       checkTracks = sum % totalMinOfTrack;
-      if(checkTracks === 0)
-      {
+      if (checkTracks === 0) {
         result = sum / totalMinOfTrack;
         break;
       }
       totalMinOfTrack += 5;
     }
 
-    if(result === 0)
-    {
+    if (result === 0) {
       result = 1;
       totalMinOfTrack = sum > 420 ? 420 : sum;
     }
 
-    return { numTracks: Math.trunc(result), minOfEachTrack: totalMinOfTrack};
+    return { numTracks: Math.trunc(result), minOfEachTrack: totalMinOfTrack };
   }
 
   makeTrackPeriod(lecturesInformation, maxMinOfPeriod) {
     let sum = 0;
     const result = [];
 
-    for(let x = 0; x < lecturesInformation.length; x++)
-    {
-      let aux = parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
-      if(aux <= maxMinOfPeriod)
-      {
+    for (let x = 0; x < lecturesInformation.length; x++) {
+      const aux =
+        parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
+      if (aux <= maxMinOfPeriod) {
         sum = aux;
         result.push(lecturesInformation[x]);
       }
