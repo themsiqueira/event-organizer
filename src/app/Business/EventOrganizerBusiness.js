@@ -60,16 +60,23 @@ class EventOrganizerBusiness {
     return newInformation;
   }
 
-  getTotalTracksAndDurationTime(newInformation) {
+  getTotalMinLectures(newInformation) {
     const numbers = newInformation.map(item =>
       parseInt(item.time.replace('min', ''), 10)
     );
     const add = (a, b) => a + b;
     const sum = numbers.reduce(add);
+
+    return sum;
+  }
+
+  getTotalTracksAndDurationTime(newInformation) {
+    const sum = this.getTotalMinLectures(newInformation);
+
     if (sum < 360) {
       return 0;
     }
-    let checkTracks;
+    let checkTracks = -1;
     let totalMinOfTrack = 360;
     let result = 0;
     while (checkTracks !== 0 && totalMinOfTrack <= 420) {
@@ -82,7 +89,8 @@ class EventOrganizerBusiness {
     }
 
     if (result === 0) {
-      result = 1;
+      const min = sum % 420;
+      result = sum > 420 ? (sum - min) / 420 : sum;
       totalMinOfTrack = sum > 420 ? 420 : sum;
     }
 
@@ -91,16 +99,28 @@ class EventOrganizerBusiness {
 
   makeTrackPeriod(lecturesInformation, maxMinOfPeriod) {
     let sum = 0;
-    const result = [];
-
-    for (let x = 0; x < lecturesInformation.length; x++) {
-      const aux =
-        parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
-      if (aux <= maxMinOfPeriod) {
-        sum = aux;
-        result.push(lecturesInformation[x]);
+    let result;
+    let count = 0;
+    while (sum !== maxMinOfPeriod) {
+      result = [];
+      for (let x = count; x < lecturesInformation.length; x++) {
+        const aux =
+          parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
+        if (aux <= maxMinOfPeriod) {
+          sum = aux;
+          result.push(lecturesInformation[x]);
+          if (sum === maxMinOfPeriod) {
+            break;
+          }
+        }
       }
+      if (sum === maxMinOfPeriod) {
+        break;
+      }
+      sum = 0;
+      count += 1;
     }
+
     return result;
   }
 
@@ -135,19 +155,23 @@ class EventOrganizerBusiness {
   }
 
   verifyAndIfNeedMakeTracksAgain(tracks, newInformation, totalTracks) {
-    let result;
-    if (tracks.length < 1) {
-      if (!this.checkTracks(tracks)) {
-        const numTracks = totalTracks.numTracks - 1;
-        const minOfEachTrack =
-          (totalTracks.minOfEachTrack * totalTracks.numTracks) / numTracks;
-        const newTotalTracks = { numTracks, minOfEachTrack };
-        result = this.remakeTracks(newInformation, newTotalTracks);
-      }
-    } else {
-      result = this.formatReturn(tracks);
+    let result = tracks;
+
+    if (!this.checkTracks(result)) {
+      const newTotalTracks = this.setNewTotalTracks(totalTracks);
+      result = this.makeTracks(newInformation, newTotalTracks);
     }
+
+    result = this.formatReturn(result);
+
     return result;
+  }
+
+  setNewTotalTracks(totalTracks) {
+    const numTracks = totalTracks.numTracks - 1;
+    const minOfEachTrack = 420;
+
+    return { numTracks, minOfEachTrack };
   }
 
   checkTracks(tracks) {
