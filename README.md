@@ -19,42 +19,40 @@ Para rodar o projeto em sua maquina é necessário as ferramentas abaixo:
 
 Antes de iniciar instale as dependências do projeto:
 
-`bash yarn install`
+`yarn install`
 
 ou
 
-`bash npm install`
+`npm install`
 
 ## Comandos disponíveis
 
 Abaixo temos alguns comandos úteis para debug, execução, build e executar testes.
 
 - Criar o build do projeto para deploy:
-  `bash yarn build`
+  `yarn build`
 
 * Executar o projeto localmente:
-  `bash yarn dev`
+  `yarn dev`
 
 - Executar os testes com o jest:
-  `bash yarn test`
+  `yarn test`
 
 # Requisição dos dados
 
 A chamada é do tipo HTTP/POST e deve ser feita pela url abaixo:
 
 - Localhost:
-  `bash http://localhost:5000/api/organize/event`
+  `http://localhost:5000/api/organize/event`
 
 * Produção:
-  `bash https://event-organizer-quero.herokuapp.com/api/organize/event`
+  `https://event-organizer-quero.herokuapp.com/api/organize/event`
 
 > Obs: a porta pode ser configurada no arquivo server.js
 
 Basicamente ela recebe um array de string, onde cada string deve conter como titulo da palestra, e separado por `espaço`, o tempo de duração.
 
 Exemplo:
-
-bash
 
 ```
 {
@@ -83,7 +81,6 @@ bash
 ```
 
 O retorno da chamada será conforme o exemplo abaixo:
-bash
 
 ```
 {
