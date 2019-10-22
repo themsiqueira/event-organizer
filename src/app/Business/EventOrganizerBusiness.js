@@ -5,25 +5,11 @@ class EventOrganizerBusiness {
     const newInformation = [];
     information.forEach(item => {
       const data = item.split(' ');
-      if (data[data.length - 1] === 'lightning') {
-        const time = '5min';
-        const title = item.replace(' lightning', '');
-        const schedule = '';
-        newInformation.push({
-          time,
-          title,
-          schedule,
-        });
-      } else {
-        const time = data[data.length - 1];
-        const title = item.replace(` ${time}`, '');
-        const schedule = '';
-        newInformation.push({
-          time,
-          title,
-          schedule,
-        });
-      }
+      newInformation.push({
+        title: item.replace(` ${data[data.length - 1]}`, ''),
+        time: data[data.length - 1].replace('lightning', '5min'),
+        schedule: '',
+      });
     });
 
     return newInformation;
