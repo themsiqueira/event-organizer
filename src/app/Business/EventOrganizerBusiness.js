@@ -94,24 +94,25 @@ class EventOrganizerBusiness {
     return { numTracks: Math.trunc(result), minOfEachTrack: totalMinOfTrack };
   }
 
-  makeTrackPeriod(lecturesInformation, maxMinOfPeriod) {
+  makeTrackPeriod(lecturesInformation, minutesOfPeriod) {
     let sum = 0;
     let result;
     let count = 0;
-    while (sum !== maxMinOfPeriod) {
+
+    while (sum !== minutesOfPeriod) {
       result = [];
       for (let x = count; x < lecturesInformation.length; x++) {
         const aux =
           parseInt(lecturesInformation[x].time.replace('min', ''), 10) + sum;
-        if (aux <= maxMinOfPeriod) {
+        if (aux <= minutesOfPeriod) {
           sum = aux;
           result.push(lecturesInformation[x]);
-          if (sum === maxMinOfPeriod) {
+          if (sum === minutesOfPeriod) {
             break;
           }
         }
       }
-      if (sum === maxMinOfPeriod) {
+      if (sum === minutesOfPeriod) {
         break;
       }
       sum = 0;
