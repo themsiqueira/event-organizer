@@ -17,10 +17,7 @@ class EventOrganizerBusiness {
         item => trackSecondPeriod.indexOf(item) === -1
       );
 
-      trackFirstPeriod.push(this.getInterval('first'));
-      trackSecondPeriod.push(this.getInterval('second'));
-      track = trackFirstPeriod.concat(trackSecondPeriod);
-      track = this.setStartTimeToAllEventsInTrack(track);
+      track = this.joinPeriodsToMakeATrack(trackFirstPeriod, trackSecondPeriod);
       tracks.push(track);
     }
 
@@ -122,6 +119,15 @@ class EventOrganizerBusiness {
     }
 
     return result;
+  }
+
+  joinPeriodsToMakeATrack(trackFirstPeriod, trackSecondPeriod) {
+    trackFirstPeriod.push(this.getInterval('first'));
+    trackSecondPeriod.push(this.getInterval('second'));
+    let track = trackFirstPeriod.concat(trackSecondPeriod);
+    track = this.setStartTimeToAllEventsInTrack(track);
+
+    return track;
   }
 
   getInterval(period) {
