@@ -116,6 +116,9 @@ class EventOrganizerBusiness {
       }
       sum = 0;
       count += 1;
+      if (count >= lecturesInformation.length) {
+        break;
+      }
     }
 
     return result;
@@ -166,9 +169,9 @@ class EventOrganizerBusiness {
     if (!this.checkTracks(result)) {
       const newTotalTracks = this.setNewTotalTracks(totalTracks);
       result = this.makeTracks(newInformation, newTotalTracks);
+    } else {
+      result = this.formatReturn(result);
     }
-
-    result = this.formatReturn(result);
 
     return result;
   }
