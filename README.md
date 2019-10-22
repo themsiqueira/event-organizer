@@ -114,3 +114,5 @@ Informações extras
 O serviço pode criar varios tracks conforme a quantidade de itens para serem encaixados no evento.
 
 O evento sempre começa as _09:00AM, com pausa ás \*\*12:00AM_ para o almoço e terminando no máximo até as _05:00PM_, fechando sempre com o happy hour.
+
+Obs: O tempo minimo de uma palestra é 'lightning' que são 5 minutos.
