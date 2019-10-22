@@ -5,14 +5,24 @@ class EventOrganizerBusiness {
     const newInformation = [];
     information.forEach(item => {
       const data = item.split(' ');
-      newInformation.push({
-        title: item.replace(` ${data[data.length - 1]}`, ''),
-        time: data[data.length - 1].replace('lightning', '5min'),
-        schedule: '',
-      });
+      if (this.verifyReceiveDataContainTime(item)) {
+        newInformation.push({
+          title: item.replace(` ${data[data.length - 1]}`, ''),
+          time: data[data.length - 1].replace('lightning', '5min'),
+          schedule: '',
+        });
+      }
     });
 
     return newInformation;
+  }
+
+  verifyReceiveDataContainTime(lecture) {
+    const data = lecture.split(' ');
+    const lightning = data[data.length - 1].indexOf('lightning');
+    const min = data[data.length - 1].indexOf('min');
+
+    return !(min === -1 && lightning === -1);
   }
 
   getTotalTracksAndDurationTime(newInformation) {

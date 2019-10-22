@@ -5,6 +5,9 @@ class EventOrganizerController {
     const { data } = req.body;
 
     const newInformation = EventOrganizerBusiness.formatInformation(data);
+    if (newInformation.length <= 0) {
+      return res.status(400).json({ error: 'You send wrong data format' });
+    }
     const totalTracks = EventOrganizerBusiness.getTotalTracksAndDurationTime(
       newInformation
     );
