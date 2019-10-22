@@ -24,7 +24,11 @@ class EventOrganizerBusiness {
       tracks.push(track);
     }
 
-    const result = this.verifyAndIfNeedMakeTracksAgain(tracks, newInformation);
+    const result = this.verifyAndIfNeedMakeTracksAgain(
+      tracks,
+      newInformation,
+      totalTracks
+    );
     return result;
   }
 
@@ -130,12 +134,15 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  verifyAndIfNeedMakeTracksAgain(tracks, newInformation) {
+  verifyAndIfNeedMakeTracksAgain(tracks, newInformation, totalTracks) {
     let result;
     if (tracks.length < 1) {
       if (!this.checkTracks(tracks)) {
-        const newTotalTracks = { numTracks: 1, minOfEachTrack: 420 };
-        result = this.makeTracks(newInformation, newTotalTracks);
+        const numTracks = totalTracks.numTracks - 1;
+        const minOfEachTrack =
+          (totalTracks.minOfEachTrack * totalTracks.numTracks) / numTracks;
+        const newTotalTracks = { numTracks, minOfEachTrack };
+        result = this.remakeTracks(newInformation, newTotalTracks);
       }
     } else {
       result = this.formatReturn(tracks);
