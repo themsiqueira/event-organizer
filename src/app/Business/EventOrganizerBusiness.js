@@ -1,34 +1,6 @@
 import Helper from '../Classes/Helper';
 
 class EventOrganizerBusiness {
-  makeTracks(newInformation, totalTracks) {
-    const tracks = [];
-    let lectures = newInformation;
-
-    for (let i = 1; i <= totalTracks.numTracks; i++) {
-      let track = [];
-      const trackFirstPeriod = this.makeTrackPeriod(lectures, 180);
-      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
-      const trackSecondPeriod = this.makeTrackPeriod(
-        lectures,
-        totalTracks.minOfEachTrack - 180
-      );
-      lectures = lectures.filter(
-        item => trackSecondPeriod.indexOf(item) === -1
-      );
-
-      track = this.joinPeriodsToMakeATrack(trackFirstPeriod, trackSecondPeriod);
-      tracks.push(track);
-    }
-
-    const result = this.verifyAndIfNeedMakeTracksAgain(
-      tracks,
-      newInformation,
-      totalTracks
-    );
-    return result;
-  }
-
   formatInformation(information) {
     const newInformation = [];
     information.forEach(item => {
@@ -57,16 +29,6 @@ class EventOrganizerBusiness {
     return newInformation;
   }
 
-  getTotalMinLectures(newInformation) {
-    const numbers = newInformation.map(item =>
-      parseInt(item.time.replace('min', ''), 10)
-    );
-    const add = (a, b) => a + b;
-    const sum = numbers.reduce(add);
-
-    return sum;
-  }
-
   getTotalTracksAndDurationTime(newInformation) {
     const sum = this.getTotalMinLectures(newInformation);
 
@@ -92,6 +54,44 @@ class EventOrganizerBusiness {
     }
 
     return { numTracks: Math.trunc(result), minOfEachTrack: totalMinOfTrack };
+  }
+
+  getTotalMinLectures(newInformation) {
+    const numbers = newInformation.map(item =>
+      parseInt(item.time.replace('min', ''), 10)
+    );
+    const add = (a, b) => a + b;
+    const sum = numbers.reduce(add);
+
+    return sum;
+  }
+
+  makeTracks(newInformation, totalTracks) {
+    const tracks = [];
+    let lectures = newInformation;
+
+    for (let i = 1; i <= totalTracks.numTracks; i++) {
+      let track = [];
+      const trackFirstPeriod = this.makeTrackPeriod(lectures, 180);
+      lectures = lectures.filter(item => trackFirstPeriod.indexOf(item) === -1);
+      const trackSecondPeriod = this.makeTrackPeriod(
+        lectures,
+        totalTracks.minOfEachTrack - 180
+      );
+      lectures = lectures.filter(
+        item => trackSecondPeriod.indexOf(item) === -1
+      );
+
+      track = this.joinPeriodsToMakeATrack(trackFirstPeriod, trackSecondPeriod);
+      tracks.push(track);
+    }
+
+    const result = this.verifyAndIfNeedMakeTracksAgain(
+      tracks,
+      newInformation,
+      totalTracks
+    );
+    return result;
   }
 
   makeTrackPeriod(lecturesInformation, minutesOfPeriod) {
@@ -177,11 +177,22 @@ class EventOrganizerBusiness {
     return result;
   }
 
-  setNewTotalTracks(totalTracks) {
-    const numTracks = totalTracks.numTracks - 1;
-    const minOfEachTrack = 420;
+  checkTracks(tracks) {
+    const allEqual = arr => arr.every(v => v === arr[0]);
+    const arraySum = this.getTotalMinOfAllTracks(tracks);
+    let result = true;
 
-    return { numTracks, minOfEachTrack };
+    arraySum.forEach(item => {
+      if (item < 420) {
+        result = false;
+      }
+    });
+
+    if (result) {
+      result = allEqual(arraySum);
+    }
+
+    return result;
   }
 
   getTotalMinOfAllTracks(tracks) {
@@ -199,22 +210,11 @@ class EventOrganizerBusiness {
     return arraySum;
   }
 
-  checkTracks(tracks) {
-    const allEqual = arr => arr.every(v => v === arr[0]);
-    const arraySum = this.getTotalMinOfAllTracks(tracks);
-    let result = true;
+  setNewTotalTracks(totalTracks) {
+    const numTracks = totalTracks.numTracks - 1;
+    const minOfEachTrack = 420;
 
-    arraySum.forEach(item => {
-      if (item < 420) {
-        result = false;
-      }
-    });
-
-    if (result) {
-      result = allEqual(arraySum);
-    }
-
-    return result;
+    return { numTracks, minOfEachTrack };
   }
 
   formatReturn(tracks) {
