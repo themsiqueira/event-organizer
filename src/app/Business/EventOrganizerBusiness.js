@@ -16,14 +16,15 @@ class EventOrganizerBusiness {
   }
 
   getTotalTracksAndDurationTime(newInformation) {
+    let checkTracks = -1;
+    let totalMinOfTrack = 360;
+    let result = 0;
     const sum = this.getTotalMinLectures(newInformation);
 
     if (sum < 360) {
       return 0;
     }
-    let checkTracks = -1;
-    let totalMinOfTrack = 360;
-    let result = 0;
+
     while (checkTracks !== 0 && totalMinOfTrack <= 420) {
       checkTracks = sum % totalMinOfTrack;
       if (checkTracks === 0) {
