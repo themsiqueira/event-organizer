@@ -184,9 +184,10 @@ class EventOrganizerBusiness {
     return { numTracks, minOfEachTrack };
   }
 
-  checkTracks(tracks) {
+  getTotalMinOfAllTracks(tracks) {
     const arraySum = [];
     let sum = 0;
+
     tracks.forEach(track => {
       track.forEach(lectures => {
         sum = parseInt(lectures.time.replace('min', ''), 10) + sum;
@@ -194,9 +195,26 @@ class EventOrganizerBusiness {
       arraySum.push(sum);
       sum = 0;
     });
-    const allEqual = arr => arr.every(v => v === arr[0]);
 
-    return allEqual(arraySum);
+    return arraySum;
+  }
+
+  checkTracks(tracks) {
+    const allEqual = arr => arr.every(v => v === arr[0]);
+    const arraySum = this.getTotalMinOfAllTracks(tracks);
+    let result = true;
+
+    arraySum.forEach(item => {
+      if (item < 420) {
+        result = false;
+      }
+    });
+
+    if (result) {
+      result = allEqual(arraySum);
+    }
+
+    return result;
   }
 
   formatReturn(tracks) {
