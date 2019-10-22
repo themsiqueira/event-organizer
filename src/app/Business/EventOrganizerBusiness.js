@@ -155,7 +155,6 @@ class EventOrganizerBusiness {
   setStartTimeToAllEventsInTrack(track) {
     let schedule = '09:00AM';
     const result = track.map(item => {
-      schedule = item.title !== 'Lunch' ? schedule : '12:00PM';
       item.schedule = schedule;
       schedule = Helper.addMinutes(schedule, item.time);
       return item;
