@@ -1,4 +1,4 @@
-﻿# EventOrganizer
+﻿# event-organizer
 
 Este é um projeto de uma API REST com objetivo de gerenciar a programação de um evento.
 Para rodar o projeto em sua maquina é necessário as ferramentas abaixo:
