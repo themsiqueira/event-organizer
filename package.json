@@ -7,7 +7,7 @@
     "heroku"
   ],
   "engines": {
-    "node": "12.9.1"
+    "node": "12.9.0"
   },
   "scripts": {
     "start": "node dist/server.js",
@@ -35,6 +35,7 @@
     "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
-    "sucrase": "^3.10.1"
+    "sucrase": "^3.10.1",
+    "supertest": "^4.0.2"
   }
 }
